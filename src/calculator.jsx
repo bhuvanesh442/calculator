@@ -37,11 +37,11 @@ export default function Calculator() {
 
           <button>.</button>
 
-          <button>C</button>
+          <button className='ClearButton'>C</button>
 
-          <button>+</button>
+          <button className="symbol">+</button>
 
-          <button>=</button>
+          <button className="equals">=</button>
         </div>
       </div>
     </>
