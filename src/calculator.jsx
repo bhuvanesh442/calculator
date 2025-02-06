@@ -5,8 +5,16 @@ export default function Calculator() {
   const [displayvalue, setdisplayvalue] = useState("");
 
   const handlebuttonclick = (value) => {
-    setdisplayvalue((prev) => prev + value);
+    if (value === "C") {
+      cleardisplay();
+    } else {
+      setdisplayvalue((prev) => prev + value);
+    }
 }
+
+const cleardisplay = () => {
+  setdisplayvalue("");
+};
 
 
   return (
