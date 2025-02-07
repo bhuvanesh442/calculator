@@ -5,15 +5,28 @@ export default function Calculator() {
   const [displayvalue, setdisplayvalue] = useState("");
 
   const handlebuttonclick = (value) => {
-    if (value === "C") {
-      cleardisplay();
+    if (value === "=") {
+      calculateresult();
+    } else if (value === "C") {
+      setdisplayvalue("");
     } else {
       setdisplayvalue((prev) => prev + value);
     }
   };
 
-  const cleardisplay = () => {
-    setdisplayvalue("");
+  const calculateresult = () => {
+    try {
+      if (/[\+\-\*\/]{2,}/.test(displayvalue) || /^[\*\/]/.test(displayvalue)) {
+        setdisplayvalue("Error");
+        return;
+      }
+
+      const result = new Function(`return ${displayvalue}`)();
+
+      setdisplayvalue(result.toString());
+    } catch (error) {
+      setdisplayvalue("Error");
+    }
   };
 
   return (
@@ -41,15 +54,16 @@ export default function Calculator() {
             "+",
           ].map((btn) => (
             <button
+              key={btn}
               onClick={() => handlebuttonclick(btn)}
-              className={
-                ["/", "*", "-", "+", "="].includes(btn) ? "symbol" : ""
-              }
+              className={["/", "*", "-", "+"].includes(btn) ? "symbol" : ""}
             >
               {btn}
             </button>
           ))}
-          <button className="equals">=</button>
+          <button onClick={() => handlebuttonclick("=")} className="equals">
+            =
+          </button>
         </div>
       </div>
     </>
